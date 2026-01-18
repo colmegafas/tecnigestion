@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: tecnigestion-api
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=tecnigestion-production-secret-key-change-this
+      - DATABASE_PATH=/app/data/tecnigestion.db
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build: ./frontend
+    container_name: tecnigestion-web
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  data:
