@@ -25,7 +25,7 @@ app = FastAPI(
 # CORS - Permitir conexiones desde cualquier origen
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://tecnigestion.vercel.app", "https://tecnigestion-4nuwxrhl7-megafas-projects.vercel.app", "http://localhost:5173", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
